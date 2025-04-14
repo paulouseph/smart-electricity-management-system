@@ -1,0 +1,434 @@
+/* No margin */
+body {
+  margin: 0;
+  background-color: #212529; /* Dark background */
+  color: #ffc107; /* Vibrant yellow text */
+  font-family: 'Arial', sans-serif;
+}
+
+/* Left side of the website */
+.left {
+  background-color: #212529; /* Dark background for the left section */
+  width: 370px;
+  float: left;
+  color: #ffc107; /* Vibrant yellow text */
+
+}
+
+.sems {
+  margin-left: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffc107; /* Yellow for headers */
+}
+
+/* Divider between sems and settings */
+.divider {
+  height: 2px;
+  background-color: #ffc107; /* Yellow accent color divider */
+  margin: 20px 0;
+  width: 100%;
+}
+
+.moveup {
+  margin: 2px 0;
+}
+
+/* Settings animation */
+.settings-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 25px;
+  font-size: 18px;
+  background-color: #212529; /* Gray for settings button */
+  color: #ffc107; /* Yellow text */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 12px; /* Space between icon and text */
+  transition: background-color 0.3s ease;
+}
+
+.settings-button:hover {
+  background-color: #212529; /* Hover effect with yellow */
+}
+
+.settings-button .fa-cog {
+  transition: transform 0.5s ease;
+}
+
+.settings-button.clicked .fa-cog {
+  transform: rotate(90deg); /* 1/4th turn */
+}
+
+.dropdown-menu {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.5s ease-out;
+}
+
+.dropdown-button {
+  display: block;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #212529; /* Same color as settings button */
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  color: #ffc107; /* Yellow text */
+}
+
+.dropdown-button:hover {
+  background-color: #dddddd; /* Hover effect */
+}
+
+.dropdown-menu.open {
+  max-height: 200px;
+  transition: max-height 0.5s ease-in;
+}
+
+/* Application section styling */
+.application {
+  background-color: #343a40; /* Gray for the application box */
+  padding: 20px;
+  width: 250px;
+  margin: 20px auto;
+  border: 1px solid #6c757d; /* Darker border */
+  color: #ffc107; /* Yellow text */
+  border-radius: 12px;
+}
+
+.application-status {
+  display: flex;
+  justify-content: space-between;
+  margin: 15px 0;
+  border-radius: 8px;
+  background: #6c757d; /* Dark background for status items */
+  padding: 10px;
+}
+
+.status-on {
+  color: #ffc107; /* Yellow for ON status */
+  background-color: #6c757d;
+  font-weight: bold;
+}
+
+.status-off {
+  color: #ffc107; /* Yellow for OFF status */
+  background-color: #6c757d;
+  font-weight: bold;
+}
+
+/* Website center section */
+.webcenter {
+  background-color: #212529; /* Dark background */
+  height: 1%; /* Full viewport height */
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 40px;
+  border-radius: 12px;
+  color: #ffc107; /* Yellow text */
+}
+
+/* Calendar styling */
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns */
+  gap: 10px; /* More spacing between items */
+  max-width: 400px;
+  margin: 30px auto;
+  background-color: #212529; /* Dark background */
+  padding: 20px;
+  border: 1px solid #212529; /* Dark border */
+  border-radius: 12px;
+}
+
+.day, .date {
+  padding: 12px;
+  text-align: center;
+  border: 1px solid #212529; /* Darker border */
+  background-color: #6c757d; /* Gray color for dates */
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000; /* Yellow text */
+}
+
+.day {
+  background-color: #ffc107; /* Yellow for day headers */
+}
+
+.date {
+  background-color: #6c757d; /* Gray color for dates */
+}
+
+.empty {
+  border: none;
+  background-color: #212529; /* Dark background */
+}
+
+
+
+
+
+/* Right side of the website */
+.right {
+  background-color: #212529; /* Dark background for the right section */
+  width: 370px;
+  float: right;
+  height: 100vh;
+  padding: 20px;
+  color: #ffc107; /* Yellow text */
+  padding: 20px;
+}
+
+/* Box styling for hr/day/month */
+.box {
+  width: 200px;
+  padding: 20px;
+  border: 2px solid #212529; /* Dark border */
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+  margin-left: 60px;
+  border-radius: 12px;
+  background-color: #6c757d; /* Gray background */
+  color: #000000; /* Yellow text */
+}
+
+.label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  margin-left: 60px;
+  color: #ffc107; /* Yellow text for labels */
+}
+
+/* Centering everything */
+.middle {    
+  margin-left: 80px;
+  margin-top: 40px;
+}
+
+.blue {
+  background-color: #6c757d; /* Gray background */
+  width: 200px;
+  padding: 20px;
+}
+
+.green {
+  width: 200px;
+  padding: 20px;
+  border: 2px solid #212529; /* Dark border */
+  margin-bottom: 20px;
+  font-size: 24px;
+  text-align: center;
+  margin-left: 60px;
+  border-radius: 12px;
+  background-color: #6c757d; /* Gray background */
+  color: #000000; /* Yellow text */
+}
+
+.center {
+  width: 300px;
+  height: auto;
+  float: left;
+}
+
+
+
+
+
+
+/* Style for the theme buttons */
+.theme-button {
+  background-color: #212529;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: -3px;
+  transition: background-color 0.3s;
+  margin-left: 50px;
+}
+
+.theme-buttons button:hover {
+  background-color: #212529; /* Darker blue on hover */
+  color: #dddddd;
+}
+
+/* Optional: Animation for dropdown */
+.theme-buttons {
+  transition: max-height 0.5s ease-out;
+  overflow: hidden;
+}
+
+
+.labelingboxes{
+  margin: 0; /* Removes extra spacing */
+  margin-left: 33px;
+}
+
+#month{
+  background-color: #000000;
+  color: #e2e0e0;
+  display: inline-block;
+    padding: 10px;
+    border: 1px solid #858585;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#year{
+  background-color: #000000;
+  color: #e2e0e0;
+  display: inline-block;
+    padding: 10px;
+    border: 1px solid #616161;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cal{
+  background-color: #212529;
+  color: #e2e0e0;
+  display: inline-block;
+    padding: 10px;
+    border: 1px solid #616161;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+.unitAppliances {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 90%;
+  max-width: 340px;
+  margin-top: 45%;
+
+}
+
+.unitAppliances > div h2 {
+  margin-left: 15%;
+}
+
+
+
+
+
+.chart-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  max-width: 850px; /* Increased width for better containment */
+  margin: 40px auto; /* Centered container */
+  height: 80vh; /* Increased height to fully contain the graph */
+  gap: 40px; /* Increased space between bars */
+  margin-left: 28%; /* Adjusted alignment */
+  border: 3px solid #343a40; /* Slightly thicker border */
+  border-radius: 10px; /* Rounded corners for the border */
+  padding: 30px; /* Increased padding for better spacing inside */
+  background-color: #343a40; /* Dark background color */
+}
+
+
+
+
+.day-bar {
+  width: 80px; /* Increased bar width */
+  background-color: #4caf50;
+  position: relative;
+  height: 300px; /* Added height to make bars taller */
+}
+
+.day-label {
+  position: absolute;
+  bottom: -30px; /* Adjusted spacing for larger labels */
+  left: 50%; /* Center-aligned with the bar */
+  transform: translateX(-50%);
+  font-size: 20px; /* Increased font size for better readability */
+  font-weight: bold;
+  color: #ffc107; /* Yellow color for labels */
+}
+
+.day-bar span {
+  position: absolute;
+  bottom: 100%; /* Positioning value unchanged */
+  left: 50%; /* Center-aligned with the bar */
+  transform: translateX(-50%);
+  font-size: 20px; /* Increased font size */
+  font-weight: bold;
+  color: #ffc107; /* Yellow color for values */
+  margin-bottom: 10px; /* Increased spacing above the bars */
+}
+.movedown{
+  margin-top: 10%;
+  margin-left: 30%;
+}
+
+#costbox{
+  background-color: #212529;
+  color: #e2e0e0;
+  display: inline-block;
+    padding: 10px;
+    border: 1px solid #616161;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+
+
+/* notfication box */
+
+.dialog-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.2); /* Transparent white */
+  backdrop-filter: blur(10px); /* Background blur effect */
+  padding: 20px;
+  border-radius: 10px;
+  width: 600px;
+  height: 400px;
+
+}
+.dialog-box button {
+  margin-top: 10px;
+  padding: 8px 15px;
+  border: none;
+  background-color: #6c757d;
+  color: #000000;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#notificationMessage{
+  font-size: 20px;
+  display: block;
+  margin-bottom: 10px; /* Adds gap between messages */
+  color: #ffffff;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+#limitInput{
+  background: rgba(255, 255, 255, 0.2); /* Transparent white */
+  backdrop-filter: blur(10px); /* Background blur effect */
+  border: none;
+  border-radius: 5px;
+  color: #000000;
+  width: 400px;
+  height: 28px;
+}
+
