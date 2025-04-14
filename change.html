@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Credentials</title>
+    <link rel="stylesheet" href="change.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="change.js" defer></script> <!-- Link to change.js -->
+</head>
+<body>
+    <div id="change-credentials">
+        <h3>Change Username and Password</h3>
+        <form id="changeCredentialsForm">
+            <input type="text" id="newUsername" placeholder="New Username" required><br>
+            <input type="password" id="newPassword" placeholder="New Password" required><br>
+            <button type="submit" class="change-btn">Change</button><br>
+        </form>
+    </div>
+</body>
+</html>

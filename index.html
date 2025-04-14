@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script src="login.js" defer></script> <!-- Link to login.js -->
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="title">Login</h2>
+        <form id="loginForm">
+            <span class="subtitle">USERNAME:</span><br>
+            <input class="uandp" type="text" id="username" required>
+            <span class="subtitle">PASSWORD:</span><br>
+            <input class="uandp" type="password" id="password" required>
+            <button class="submit-btn" type="submit">Login</button>
+        </form>
+    </div>
+</body>
+</html>
+

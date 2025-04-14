@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
+    margin: 0;
+}
+
+.login-container {
+    background: #1f1f1f;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.title{
+    color: bisque;
+    margin-right: 300px;
+    font-size: 45px;
+}
+
+.uandp{
+    border: none;
+    border-bottom: solid rgb(143, 143, 143) 1px;
+    margin-bottom: 20px;
+    background: none;
+    color: rgba(255, 255, 255, 0.555);
+    height: 35px;
+    width: 300px;
+}
+.subtitle {
+    color: rgba(177, 177, 177, 0.3);
+    font-size: 15px;
+    margin-right: 300px;
+
+}
+
+.submit-btn {
+    width: 95%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+

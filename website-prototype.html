@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link id="themeStylesheet" rel="stylesheet" href="BlackAndYellow.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <!-- Add Firebase SDK -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+        <script>
+            // Initialize Firebase
+            const firebaseConfig = {
+                apiKey: "AIzaSyAi0Ja_F9gS6bacZwSC5AX8ma7PiRV-gYk",
+                authDomain: "sem-system-93f17.firebaseapp.com",
+                databaseURL: "https://sem-system-93f17-default-rtdb.asia-southeast1.firebasedatabase.app",
+                projectId: "sem-system-93f17",
+                storageBucket: "sem-system-93f17.firebasestorage.app",
+                messagingSenderId: "181076857349",
+                appId: "1:181076857349:web:44e5efa46c027eed47026c"
+                };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
+
+        </script>
+        <script src="web.js"></script>
+    </head>
+    
+<body>
+    ‎ 
+        <div class="left">
+            <h2 class="sems">SMART ELECTRICITY MANAGEMENT SYSTEM</h2>
+            <div class="controls">
+                            <!-- Button with Animated Settings Icon -->
+                <button class="settings-button" id="settings-btn">
+                    <i class="fas fa-cog"></i> <!-- Font Awesome Settings Icon -->
+                    Settings
+                </button>
+
+                <div class="dropdown-menu" id="dropdown-menu">
+
+                    <button class="dropdown-button" onclick="showDialog()">Notification</button>
+
+                    <div class="dialog-box" id="notificationDialog">
+                        <button class="close-button" onclick="closeDialog()">✖</button>
+                        
+                        <div class="limit-section">
+                            <input type="number" id="limitInput" placeholder="Set unit limit">
+                            <button onclick="setLimit()">Set Limit</button>
+                        </div>
+                    
+                        <div class="notification-section">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button onclick="clearNotifications()" class="clear-button">Clear All</button>
+                            </div>
+                            <div class="notification-messages" id="notificationMessages">
+                                <!-- Notifications will be inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <script>
+                        let userLimit = 0.0038931419128;
+                        let notificationQueue = [];
+                        let lastAppliance1State = null;
+                        let lastAppliance2State = null;
+                    
+                        // Initialize appliance state listeners once
+                        function initializeApplianceListeners() {
+                            database.ref("Appliance1/DesiredRelayState").on("value", snapshot => {
+                                const newState = snapshot.val();
+                                if (newState !== lastAppliance1State) {
+                                    addNotification(`🔄 Appliance 1 turned ${newState}`);
+                                    lastAppliance1State = newState;
+                                }
+                            });
+                    
+                            database.ref("Appliance2/DesiredRelayState").on("value", snapshot => {
+                                const newState = snapshot.val();
+                                if (newState !== lastAppliance2State) {
+                                    addNotification(`🔄 Appliance 2 turned ${newState}`);
+                                    lastAppliance2State = newState;
+                                }
+                            });
+                        }
+                    
+                        function addNotification(message) {
+                            notificationQueue.unshift({
+                                timestamp: new Date().toLocaleTimeString(),
+                                message: message
+                            });
+                            updateNotificationUI();
+                        }
+                    
+                        function checkDailyUsage() {
+                            database.ref("PowerUsage/DailyUnits").once("value", snapshot => {
+                                const data = snapshot.val();
+                                const dates = Object.keys(data);
+                                const latestDate = dates[dates.length - 1];
+                                const latestUnits = parseFloat(data[latestDate]);
+                    
+                                if (latestUnits > userLimit) {
+                                    addNotification(`⚠️ Daily limit exceeded! (${latestUnits.toFixed(4)} units on ${latestDate})`);
+                                }
+                            });
+                        }
+                    
+                        function updateNotificationUI() {
+                            const container = document.getElementById("notificationMessages");
+                            container.innerHTML = notificationQueue.map(notification => 
+                                `<div class="notification-item">
+                                    <span class="timestamp">[${notification.timestamp}]</span>
+                                    ${notification.message}
+                                </div>`
+                            ).join('');
+                            
+                            // Auto-scroll to top
+                            container.scrollTop = 0;
+                        }
+                    
+                        function clearNotifications() {
+                            notificationQueue = [];
+                            updateNotificationUI();
+                        }
+                    
+                        // Initial setup
+                        initializeApplianceListeners();
+                        
+                        // Check usage every 40 seconds
+                        setInterval(checkDailyUsage, 40000);
+                        
+                        // Existing dialog functions
+                        function showDialog() {
+                            document.getElementById("notificationDialog").style.display = "block";
+                            checkDailyUsage(); // Refresh data when dialog opens
+                        }
+                    
+                        function closeDialog() {
+                            document.getElementById("notificationDialog").style.display = "none";
+                        }
+                    
+                        function setLimit() {
+                            const inputLimit = document.getElementById("limitInput").value;
+                            if (inputLimit) {
+                                userLimit = parseFloat(inputLimit);
+                                addNotification(`ℹ️ Daily limit set to ${userLimit} units`);
+                            }
+                        }
+                    </script>
+                    
+                
+                    <button class="dropdown-button" onclick="window.location.href='change.html'">Change Username and Password</button>
+                    <button class="dropdown-button" onclick="toggleDropdown()">Theme</button>
+                    
+                    <!-- Theme Switcher Buttons (Initially Hidden) -->
+                    <div id="themeDropdown"  style="display:none;">
+                        <button onclick="switchTheme('BlueAndWhite.css')" class="theme-button">Blue And White</button><br>
+                        <button onclick="switchTheme('Neon.css')" class="theme-button">Neon</button><br>
+                        <button onclick="switchTheme('BlackAndYellow.css')" class="theme-button">Black And Yellow</button><br>
+                    </div>
+                </div>
+
+                <script>
+                    // JavaScript to toggle the rotation and dropdown animation on click
+                    const settingsButton = document.getElementById('settings-btn');
+                    const dropdownMenu = document.getElementById('dropdown-menu');
+                    
+                    settingsButton.addEventListener('click', () => {
+                        settingsButton.classList.toggle('clicked'); // Rotate the cog
+                        dropdownMenu.classList.toggle('open'); // Slide down/up the dropdown menu
+                    });
+                </script>
+
+            </div>
+            <br>
+            <br>
+            <div class="application">
+                <h2 class="moveup">No of Appliances that are ON/OFF:</h2>
+            
+                <!-- Appliances 1 Status -->
+                <div class="application-status">
+                    <span class="textContent">Appliances 1:</span>
+                    <button id="application1-off" class="status-off" onclick="toggleStatus(1)">OFF</button>
+                    <button id="application1-on" class="status-on hidden" onclick="toggleStatus(1)">ON</button>
+                </div>
+
+                <!-- Appliances 2 Status -->
+                <div class="application-status">
+                    <span class="textContent">Appliances 2:</span>
+                    <button id="application2-off" class="status-off" onclick="toggleStatus(2)">OFF</button>
+                    <button id="application2-on" class="status-on hidden" onclick="toggleStatus(2)">ON</button>
+                </div>
+            </div>
+ 
+            
+            
+            
+            
+            
+
+            <div class="unitAppliances"> 
+                <div>
+                    <h2> Usage History:</h2>
+                      <div class="label">
+                          <h2 class="bgcolour-blue">Unit used in Days</h2>
+                      </div>
+                      <div class="box days" id="his-day">0</div>
+                  
+                      <div class="label">
+                          <h2 class="bgcolour-blue">Unit used in a Month</h2>
+                      </div>
+                      <div class="box months" id="his-month">0</div>
+                  </div>
+
+                <div id="units-appliance1">  
+                    <h2 class="unitapptext"> unit in<br>Realtime of  Appliance 1</h2>
+                    <div class="box">0</div>
+                </div>
+                
+                <div id="units-appliance2">
+                    <h2 class="unitapptext"> unit in<br>Realtime of  Appliance 2</h2>
+                    <div class="box">0</div>
+                </div>
+  
+            </div>
+
+
+        </div>
+
+
+        <div class="right">
+            <div class="label"><h2>Combined Unit in Realtime</h2></div>
+            <div class="green" id="units-realtime">0</div>
+          
+                <div class="label">
+                    <h2>Unit used Today</h2>
+                </div>
+                <div class="box days" id="units-day">0</div>
+              
+                <div class="label">
+                    <h2>Unit used this Month</h2>
+                </div>
+                <div class="box months" id="units-month">0</div>
+
+                <div class="row">
+                    <div>
+                        <h3 align="center">
+                            Usage Cost in Day:</h3>
+                    </div>
+                    <div  id="usage-cost-day"  class="box" >₹0.00</div> <!-- This will display the calculated cost -->
+                </div>
+                
+                <div class="row">
+                    <div >
+                        <h3 align="center"> 
+                            Usage Cost in Month:</h3>
+                    </div>
+                    <div id="usage-cost-month"  class="box" >₹0.00</div> <!-- This will display the calculated cost -->
+                </div>
+
+
+
+              
+              
+
+
+
+            </div>
+            
+        </div>
+                <h1 class="middle">Usage History:</h1>
+                <label for="month" class="middle">Select Month:</label>
+                <select id="month" name="month" onchange="updateCalendar()">
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              
+                <label for="year">Select Year:</label>
+                <select id="year" name="year" onchange="updateCalendar()">
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                    <option value="2027">2027</option>
+                    <option value="2028">2028</option>
+                    <option value="2029">2029</option>
+                    <option value="2030">2030</option>
+                </select>
+              
+                <div class="calendar" id="calendar">
+                  <!-- Days of the week -->
+                  <div class="day">Mon</div>
+                  <div class="day">Tue</div>
+                  <div class="day">Wed</div>
+                  <div class="day">Thu</div>
+                  <div class="day">Fri</div>
+                  <div class="day">Sat</div>
+                  <div class="day">Sun</div>
+                  
+                  <!-- Dates will be dynamically generated here -->
+                </div>
+
+                <h1 class="movedown">Weekly Units Usage Graph</h1>
+                <div class="chart-container" id="usageChart"></div>
+                
+                <script>
+                    // Function to fetch weekly usage data from Firebase
+                    async function fetchWeeklyUsageData() {
+                        try {
+                            // Fetch data from Firebase
+                            const response = await firebase.database().ref('/PowerUsage/weeklyUsage').once('value');
+                            const data = response.val();
+                            console.log("Fetched data from Firebase:", data); // Debug statement
+                            return data;
+                        } catch (error) {
+                            console.error('Error fetching data from Firebase:', error);
+                            return null; // Return null if there's an error
+                        }
+                    }
+                
+                    // Function to get the current week's days
+                    function getCurrentWeekDays() {
+                        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                        const today = new Date();
+                        const currentDayOfWeek = today.getDay(); // 0 (Sunday) to 6 (Saturday)
+                        const startOfWeek = new Date(today);
+                        startOfWeek.setDate(today.getDate() - currentDayOfWeek); // Start from Sunday
+                
+                        const weekDays = [];
+                        for (let i = 0; i < 7; i++) {
+                            const day = new Date(startOfWeek);
+                            day.setDate(startOfWeek.getDate() + i);
+                            weekDays.push({
+                                dayName: days[day.getDay()]
+                            });
+                        }
+                        return weekDays;
+                    }
+                
+                    // Function to generate the graph
+                    async function generateGraph() {
+                        // Fetch weekly usage data from Firebase
+                        const weeklyUsage = await fetchWeeklyUsageData();
+                
+                        // Check if weeklyUsage is valid
+                        if (!weeklyUsage || Object.keys(weeklyUsage).length === 0) {
+                            console.error('No weekly usage data available.');
+                            return; // Exit the function if data is not available
+                        }
+                
+                        const chartContainer = document.getElementById('usageChart');
+                        chartContainer.innerHTML = ''; // Clear previous bars
+                
+                        const maxHeight = 400; // Max height for bars (in pixels)
+                        const maxUsage = Math.max(...Object.values(weeklyUsage)); // Maximum usage value
+                
+                        // Get the current week's days
+                        const weekDays = getCurrentWeekDays();
+                
+                        // Iterate over each day of the week and create a bar for the chart
+                        weekDays.forEach(dayInfo => {
+                            const bar = document.createElement('div');
+                            bar.classList.add('day-bar');
+                
+                            // Get the usage value for the day
+                            const usageValue = weeklyUsage[dayInfo.dayName] || 0;
+                
+                            // Normalize the height of each bar, ensuring the highest value reaches maxHeight
+                            let usageHeight = (usageValue / maxUsage) * maxHeight;
+                
+                            // Ensure a minimum height for small values (e.g., 10px)
+                            const minHeight = 10; // Minimum height in pixels
+                            if (usageHeight < minHeight && usageValue > 0) {
+                                usageHeight = minHeight;
+                            }
+                
+                            // Set the height of the bar
+                            bar.style.height = `${usageHeight}px`;
+                
+                            // Create span showing the usage value at the top of the bar
+                            const usageSpan = document.createElement('span');
+                            usageSpan.textContent = usageValue.toFixed(4); // Show 4 decimal places
+                
+                            // Create label for the day
+                            const label = document.createElement('div');
+                            label.classList.add('day-label');
+                            label.textContent = dayInfo.dayName;
+                
+                            bar.appendChild(usageSpan);
+                            bar.appendChild(label);
+                            chartContainer.appendChild(bar);
+                        });
+                    }
+                
+                    // Initialize graph when the page loads
+                    document.addEventListener('DOMContentLoaded', generateGraph);
+                
+                    // Fetch data from Firebase every 35 seconds
+                    setInterval(generateGraph, 40000);
+                </script>
+                
+                
+                
+            </div>
+         
+</body>
+</html>
