@@ -44,4 +44,3 @@ This project is licensed under the **MIT License**. You are free to modify and u
 Author
 - Name: PAUL OUSEPH
 - Project: Smart Electricity Management System
-- Date: [Your Date]
